@@ -3,12 +3,23 @@ const cors = require("cors")
 const assetsRouter = require("./assets")
 
 const app = express()
+
+// Erlaube GitHub Pages als Origin
+const allowedOrigins = [
+  'https://daviddd113.github.io',
+  'https://turbo-guacamole-6949xg77wp4g35xrw-5173.app.github.dev'
+];
+
 app.use(cors({
-  origin: "https://turbo-guacamole-6949xg77wp4g35xrw-5173.app.github.dev",
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin'],
-  credentials: true
-}))
+  origin: function(origin, callback) {
+    // Erlaube keine Origin (z.B. bei lokalen Tools) oder explizit erlaubte Origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 app.get("/", (req, res) => {
   res.send("API läuft. Benutze /api/assets für Asset-Daten.")
