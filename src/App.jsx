@@ -46,6 +46,9 @@ function App() {
   // Collapse State
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
+  // NEU: Sidebar-Drawer für Mobilgeräte
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
   const maxYears = asset ? Math.floor(asset.monthlyReturns?.length / 12) : 40
 
   const [circleAnim, setCircleAnim] = useState({ t: 0 })
@@ -226,6 +229,84 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 relative overflow-hidden">
+      {/* Hamburger-Button für Mobilgeräte */}
+      <button
+        className="fixed top-4 left-4 z-30 md:hidden bg-white/70 rounded-full p-2 shadow-lg"
+        onClick={() => setMobileSidebarOpen(true)}
+        style={{ display: sidebarCollapsed ? "none" : undefined }}
+      >
+        <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M4 8h20M4 16h20"/>
+        </svg>
+      </button>
+      {/* Sidebar als Drawer auf Mobilgeräten */}
+      <div
+        className={`fixed inset-0 z-40 bg-black/30 transition-all duration-300 md:hidden ${mobileSidebarOpen ? "block" : "hidden"}`}
+        onClick={() => setMobileSidebarOpen(false)}
+      >
+        <div
+          className={`absolute top-0 left-0 h-full bg-white/90 shadow-2xl transition-transform duration-300
+            ${mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"}
+            w-[90vw] max-w-xs`}
+          onClick={e => e.stopPropagation()}
+        >
+          {prognoseMode ? (
+            <PrognoseSidebar
+              startAmount={prognoseStartAmount}
+              setStartAmount={setPrognoseStartAmount}
+              savingType={prognoseSavingType}
+              setSavingType={setPrognoseSavingType}
+              savingAmount={prognoseSavingAmount}
+              setSavingAmount={setPrognoseSavingAmount}
+              years={prognoseYears}
+              setYears={setPrognoseYears}
+              rendite={prognoseRendite}
+              setRendite={setPrognoseRendite}
+              dividendenRendite={prognoseDividendenRendite}
+              setDividendenRendite={setPrognoseDividendenRendite}
+              increaseEveryNYears={prognoseIncreaseEveryNYears}
+              setIncreaseEveryNYears={setPrognoseIncreaseEveryNYears}
+              increaseAmount={prognoseIncreaseAmount}
+              setIncreaseAmount={setPrognoseIncreaseAmount}
+              doubleMonths={prognoseDoubleMonths}
+              setDoubleMonths={setPrognoseDoubleMonths}
+              setShowAdvancedSettings={setShowAdvancedSettings}
+              collapsed={false}
+              setCollapsed={() => {}}
+            />
+          ) : (
+            <Sidebar
+              startAmount={startAmount}
+              setStartAmount={setStartAmount}
+              savingType={savingType}
+              setSavingType={setSavingType}
+              savingAmount={savingAmount}
+              setSavingAmount={setSavingAmount}
+              years={years}
+              setYears={setYears}
+              maxYears={maxYears}
+              assets={assets}
+              asset={asset}
+              setAsset={setAsset}
+              portfolioMode={portfolioMode}
+              setPortfolioMode={setPortfolioMode}
+              portfolioAssets={portfolioAssets}
+              setPortfolioAssets={setPortfolioAssets}
+              increaseEveryNYears={increaseEveryNYears}
+              increaseAmount={increaseAmount}
+              doubleMonths={doubleMonths}
+              setShowAdvancedSettings={setShowAdvancedSettings}
+              collapsed={false}
+              setCollapsed={() => {}}
+            />
+          )}
+          <button
+            className="absolute top-3 right-3 text-2xl"
+            onClick={() => setMobileSidebarOpen(false)}
+          >✕</button>
+        </div>
+      </div>
+
       {/* Animated Background */}
       <div
         className="pointer-events-none select-none"
@@ -350,62 +431,69 @@ function App() {
         </button>
       </div>
 
-      <div className="flex w-full max-w-5xl gap-8 items-start justify-center relative z-10">
-        {prognoseMode ? (
-          <PrognoseSidebar
-            startAmount={prognoseStartAmount}
-            setStartAmount={setPrognoseStartAmount}
-            savingType={prognoseSavingType}
-            setSavingType={setPrognoseSavingType}
-            savingAmount={prognoseSavingAmount}
-            setSavingAmount={setPrognoseSavingAmount}
-            years={prognoseYears}
-            setYears={setPrognoseYears}
-            rendite={prognoseRendite}
-            setRendite={setPrognoseRendite}
-            dividendenRendite={prognoseDividendenRendite}
-            setDividendenRendite={setPrognoseDividendenRendite}
-            increaseEveryNYears={prognoseIncreaseEveryNYears}
-            setIncreaseEveryNYears={setPrognoseIncreaseEveryNYears}
-            increaseAmount={prognoseIncreaseAmount}
-            setIncreaseAmount={setPrognoseIncreaseAmount}
-            doubleMonths={prognoseDoubleMonths}
-            setDoubleMonths={setPrognoseDoubleMonths}
-            setShowAdvancedSettings={setShowAdvancedSettings}
-            collapsed={sidebarCollapsed}
-            setCollapsed={setSidebarCollapsed}
-          />
-        ) : (
-          <Sidebar
-            startAmount={startAmount}
-            setStartAmount={setStartAmount}
-            savingType={savingType}
-            setSavingType={setSavingType}
-            savingAmount={savingAmount}
-            setSavingAmount={setSavingAmount}
-            years={years}
-            setYears={setYears}
-            maxYears={maxYears}
-            assets={assets}
-            asset={asset}
-            setAsset={setAsset}
-            portfolioMode={portfolioMode}
-            setPortfolioMode={setPortfolioMode}
-            portfolioAssets={portfolioAssets}
-            setPortfolioAssets={setPortfolioAssets}
-            increaseEveryNYears={increaseEveryNYears}
-            increaseAmount={increaseAmount}
-            doubleMonths={doubleMonths}
-            setShowAdvancedSettings={setShowAdvancedSettings}
-            collapsed={sidebarCollapsed}
-            setCollapsed={setSidebarCollapsed}
-          />
-        )}
-
-        <div className="flex-1 flex flex-col items-center" style={{ 
-          marginLeft: sidebarCollapsed ? "80px" : "260px",
-          transition: "margin-left 0.3s ease-in-out"
-        }}>
+      <div className="flex w-full max-w-5xl gap-8 items-start justify-center relative z-10
+        flex-col md:flex-row md:gap-8">
+        {/* Sidebar: Desktop sichtbar, Mobil ausgeblendet */}
+        <div className="hidden md:block">
+          {prognoseMode ? (
+            <PrognoseSidebar
+              startAmount={prognoseStartAmount}
+              setStartAmount={setPrognoseStartAmount}
+              savingType={prognoseSavingType}
+              setSavingType={setPrognoseSavingType}
+              savingAmount={prognoseSavingAmount}
+              setSavingAmount={setPrognoseSavingAmount}
+              years={prognoseYears}
+              setYears={setPrognoseYears}
+              rendite={prognoseRendite}
+              setRendite={setPrognoseRendite}
+              dividendenRendite={prognoseDividendenRendite}
+              setDividendenRendite={setPrognoseDividendenRendite}
+              increaseEveryNYears={prognoseIncreaseEveryNYears}
+              setIncreaseEveryNYears={setPrognoseIncreaseEveryNYears}
+              increaseAmount={prognoseIncreaseAmount}
+              setIncreaseAmount={setPrognoseIncreaseAmount}
+              doubleMonths={prognoseDoubleMonths}
+              setDoubleMonths={setPrognoseDoubleMonths}
+              setShowAdvancedSettings={setShowAdvancedSettings}
+              collapsed={sidebarCollapsed}
+              setCollapsed={setSidebarCollapsed}
+            />
+          ) : (
+            <Sidebar
+              startAmount={startAmount}
+              setStartAmount={setStartAmount}
+              savingType={savingType}
+              setSavingType={setSavingType}
+              savingAmount={savingAmount}
+              setSavingAmount={setSavingAmount}
+              years={years}
+              setYears={setYears}
+              maxYears={maxYears}
+              assets={assets}
+              asset={asset}
+              setAsset={setAsset}
+              portfolioMode={portfolioMode}
+              setPortfolioMode={setPortfolioMode}
+              portfolioAssets={portfolioAssets}
+              setPortfolioAssets={setPortfolioAssets}
+              increaseEveryNYears={increaseEveryNYears}
+              increaseAmount={increaseAmount}
+              doubleMonths={doubleMonths}
+              setShowAdvancedSettings={setShowAdvancedSettings}
+              collapsed={sidebarCollapsed}
+              setCollapsed={setSidebarCollapsed}
+            />
+          )}
+        </div>
+        {/* Hauptinhalt: Charts & MetricsPanel */}
+        <div className="flex-1 flex flex-col items-center w-full"
+          style={{
+            marginLeft: sidebarCollapsed ? "80px" : "260px",
+            transition: "margin-left 0.3s ease-in-out",
+            marginLeft: undefined, // Mobil kein margin
+          }}
+        >
           {prognoseMode ? (
             <PrognoseCharts
               startAmount={prognoseStartAmount}
@@ -420,9 +508,8 @@ function App() {
             />
           ) : (
             result ? (
-              <div className="flex gap-4 w-full">
-                {/* Metrics Panel mit fester Breite wie in Prognose */}
-                <div className="flex flex-col gap-4" style={{ width: "220px" }}>
+              <div className="flex flex-col md:flex-row gap-4 w-full">
+                <div className="flex flex-col gap-4 w-full md:w-[220px]">
                   <MetricsPanel
                     portfolioMode={portfolioMode}
                     asset={asset}
@@ -436,9 +523,7 @@ function App() {
                     doubleMonths={doubleMonths}
                   />
                 </div>
-
-                {/* Charts mit Abstand wie in Prognose */}
-                <div className="flex-1" style={{ marginLeft: "20px" }}>
+                <div className="flex-1" style={{ marginLeft: "0", marginTop: "20px" }}>
                   <Charts
                     portfolioMode={portfolioMode}
                     portfolioAssets={portfolioAssets}

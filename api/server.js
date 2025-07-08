@@ -7,6 +7,7 @@ const app = express()
 // Erlaube GitHub Pages als Origin
 const allowedOrigins = [
   'https://daviddd113.github.io',
+  'https://turbo-guacamole-6949xg77wp4g35xrw-5173.app.github.dev/'
   // weitere erlaubte Origins ggf. ergänzen
 ];
 

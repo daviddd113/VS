@@ -46,12 +46,14 @@ function Sidebar({
 
   return (
     <aside
-      className="fixed left-0 top-0 bottom-0 shadow-2xl flex flex-col gap-4 transition-all duration-300 ease-in-out"
+      className="fixed left-0 top-0 bottom-0 shadow-2xl flex flex-col gap-4 transition-all duration-300 ease-in-out
+        bg-white/90 md:bg-[rgba(255,255,255,0.1)] md:backdrop-blur-[40px] md:saturate-200"
       style={{
-        margin: "32px",
-        minWidth: collapsed ? "48px" : "260px",
-        width: collapsed ? "48px" : "320px",
-        height: "calc(100vh - 64px)",
+        margin: "0",
+        minWidth: collapsed ? "48px" : "80vw",
+        width: collapsed ? "48px" : "90vw",
+        maxWidth: "360px",
+        height: "100vh",
         zIndex: 10,
         display: "flex",
         justifyContent: "flex-start",
@@ -65,10 +67,10 @@ function Sidebar({
         overflow: "hidden",
       }}
     >
-      {/* Collapse Button */}
+      {/* Collapse Button: Mobil ausgeblendet */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute top-4 right-2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+        className="absolute top-4 right-2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hidden md:flex"
         style={{
           background: "rgba(255, 255, 255, 0.3)",
           backdropFilter: "blur(20px)",
@@ -92,7 +94,7 @@ function Sidebar({
           {/* Keine vertikale Überschrift mehr */}
         </div>
       ) : (
-        <form className="flex flex-col gap-4 p-6 h-full overflow-y-auto">
+        <form className="flex flex-col gap-4 p-4 md:p-6 h-full overflow-y-auto">
           <div className="text-center mb-4">
             <h2 className="text-xl font-bold text-gray-800">Historische Daten</h2>
           </div>

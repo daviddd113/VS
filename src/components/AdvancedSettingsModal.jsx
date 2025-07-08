@@ -41,7 +41,7 @@ function AdvancedSettingsModal({
       onClick={handleClose}
     >
       <div 
-        className="rounded-3xl p-8 w-[600px] mx-4 shadow-2xl relative"
+        className="rounded-3xl p-4 md:p-8 w-full max-w-[600px] mx-2 md:mx-4 shadow-2xl relative"
         style={{ 
           zIndex: 10000,
           background: "rgba(255, 255, 255, 0.1)",

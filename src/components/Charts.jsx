@@ -46,10 +46,10 @@ function Charts({
   const hasValidPriceTimeline = priceTimeline && Array.isArray(priceTimeline) && priceTimeline.length > 0
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-full">
       {/* Portfolio Asset-Diagramme */}
       {portfolioMode && portfolioAssets.length > 0 && (
-        <div className="flex gap-4 overflow-x-auto pb-2">
+        <div className="flex gap-4 overflow-x-auto pb-2 w-full">
           {portfolioAssets.filter(pa => pa.symbol && pa.allocation > 0).map((portfolioAsset, index) => {
             const assetData = assets.find(a => a.symbol === portfolioAsset.symbol);
             if (!assetData) return null;
@@ -152,7 +152,7 @@ function Charts({
 
       {/* Haupt-Charts Box */}
       {hasValidInvestmentTimeline ? (
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
           {portfolioMode ? (
             // Portfolio Investment-Entwicklung
             <div
@@ -279,7 +279,7 @@ function Charts({
         </div>
       ) : (
         <div
-          className="p-4 rounded-[20px] shadow"
+          className="p-4 rounded-[20px] shadow w-full"
           style={{
             background: "rgba(255,255,255,0.55)",
             backdropFilter: "blur(16px)",
