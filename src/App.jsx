@@ -99,7 +99,7 @@ function App() {
   }, [startAmount, savingAmount, savingType, increaseEveryNYears, increaseAmount, doubleMonths])
 
   useEffect(() => {
-    const apiUrl = 'https://turbo-guacamole-6949xg77wp4g35xrw-4000.app.github.dev/api/assets';
+    const apiUrl = 'https://vs-tmj9.onrender.com'; // <--- Hier deine neue URL eintragen!
     
     fetch(apiUrl, {
       method: 'GET',
