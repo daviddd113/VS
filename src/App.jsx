@@ -247,74 +247,63 @@ function App() {
         <div
           className={`absolute top-0 left-0 h-full bg-white/90 shadow-2xl transition-transform duration-300
             ${mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-            w-[100vw] max-w-[400px]`}
+            w-[90vw] max-w-xs`}
           onClick={e => e.stopPropagation()}
-          style={{
-            borderTopRightRadius: "24px",
-            borderBottomRightRadius: "24px",
-            minWidth: "0",
-            padding: "0",
-            overflowY: "auto",
-            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.15)",
-          }}
         >
-          <div className="relative">
-            <button
-              className="absolute top-3 right-3 text-2xl z-20 bg-white/80 rounded-full px-2 py-1 shadow"
-              onClick={() => setMobileSidebarOpen(false)}
-              style={{ lineHeight: 1 }}
-            >✕</button>
-            {prognoseMode ? (
-              <PrognoseSidebar
-                startAmount={prognoseStartAmount}
-                setStartAmount={setPrognoseStartAmount}
-                savingType={prognoseSavingType}
-                setSavingType={setPrognoseSavingType}
-                savingAmount={prognoseSavingAmount}
-                setSavingAmount={setPrognoseSavingAmount}
-                years={prognoseYears}
-                setYears={setPrognoseYears}
-                rendite={prognoseRendite}
-                setRendite={setPrognoseRendite}
-                dividendenRendite={prognoseDividendenRendite}
-                setDividendenRendite={setPrognoseDividendenRendite}
-                increaseEveryNYears={prognoseIncreaseEveryNYears}
-                setIncreaseEveryNYears={setPrognoseIncreaseEveryNYears}
-                increaseAmount={prognoseIncreaseAmount}
-                setIncreaseAmount={setPrognoseIncreaseAmount}
-                doubleMonths={prognoseDoubleMonths}
-                setDoubleMonths={setPrognoseDoubleMonths}
-                setShowAdvancedSettings={setShowAdvancedSettings}
-                collapsed={false}
-                setCollapsed={() => {}}
-              />
-            ) : (
-              <Sidebar
-                startAmount={startAmount}
-                setStartAmount={setStartAmount}
-                savingType={savingType}
-                setSavingType={setSavingType}
-                savingAmount={savingAmount}
-                setSavingAmount={setSavingAmount}
-                years={years}
-                setYears={setYears}
-                maxYears={maxYears}
-                assets={assets}
-                asset={asset}
-                setAsset={setAsset}
-                portfolioMode={portfolioMode}
-                setPortfolioMode={setPortfolioMode}
-                portfolioAssets={portfolioAssets}
-                setPortfolioAssets={setPortfolioAssets}
-                increaseEveryNYears={increaseEveryNYears}
-                increaseAmount={increaseAmount}
-                doubleMonths={doubleMonths}
-                setShowAdvancedSettings={setShowAdvancedSettings}
-                collapsed={false}
-                setCollapsed={() => {}}
-              />
-            )}
-          </div>
+          {prognoseMode ? (
+            <PrognoseSidebar
+              startAmount={prognoseStartAmount}
+              setStartAmount={setPrognoseStartAmount}
+              savingType={prognoseSavingType}
+              setSavingType={setPrognoseSavingType}
+              savingAmount={prognoseSavingAmount}
+              setSavingAmount={setPrognoseSavingAmount}
+              years={prognoseYears}
+              setYears={setPrognoseYears}
+              rendite={prognoseRendite}
+              setRendite={setPrognoseRendite}
+              dividendenRendite={prognoseDividendenRendite}
+              setDividendenRendite={setPrognoseDividendenRendite}
+              increaseEveryNYears={prognoseIncreaseEveryNYears}
+              setIncreaseEveryNYears={setPrognoseIncreaseEveryNYears}
+              increaseAmount={prognoseIncreaseAmount}
+              setIncreaseAmount={setPrognoseIncreaseAmount}
+              doubleMonths={prognoseDoubleMonths}
+              setDoubleMonths={setPrognoseDoubleMonths}
+              setShowAdvancedSettings={setShowAdvancedSettings}
+              collapsed={false}
+              setCollapsed={() => {}}
+            />
+          ) : (
+            <Sidebar
+              startAmount={startAmount}
+              setStartAmount={setStartAmount}
+              savingType={savingType}
+              setSavingType={setSavingType}
+              savingAmount={savingAmount}
+              setSavingAmount={setSavingAmount}
+              years={years}
+              setYears={setYears}
+              maxYears={maxYears}
+              assets={assets}
+              asset={asset}
+              setAsset={setAsset}
+              portfolioMode={portfolioMode}
+              setPortfolioMode={setPortfolioMode}
+              portfolioAssets={portfolioAssets}
+              setPortfolioAssets={setPortfolioAssets}
+              increaseEveryNYears={increaseEveryNYears}
+              increaseAmount={increaseAmount}
+              doubleMonths={doubleMonths}
+              setShowAdvancedSettings={setShowAdvancedSettings}
+              collapsed={false}
+              setCollapsed={() => {}}
+            />
+          )}
+          <button
+            className="absolute top-3 right-3 text-2xl"
+            onClick={() => setMobileSidebarOpen(false)}
+          >✕</button>
         </div>
       </div>
 
