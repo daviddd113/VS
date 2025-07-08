@@ -3,37 +3,34 @@ const router = express.Router()
 const yahooFinance = require("yahoo-finance2").default
 
 const assetSymbols = [
-  // Neue ETFs ganz oben
-  { name: "iShares Core MSCI World UCITS ETF", symbol: "IE00BJ0KDQ92", yahoo: "IWDA.L" },
-  { name: "Vanguard FTSE All-World UCITS ETF", symbol: "IE00BTJRMP35", yahoo: "VWRL.L" },
-  { name: "iShares Core S&P 500 UCITS ETF", symbol: "IE00BF4RFH31", yahoo: "CSSPX.L" },
+  // Hauptindizes - jeweils beste/bekannteste Version
   
-  // Bestehende Assets
-  { name: "S&P 500 ETF", symbol: "SPY", yahoo: "SPY" },
-  { name: "Vanguard S&P 500", symbol: "VOO", yahoo: "VOO" },
+  
+  // Einzelaktien
   { name: "Apple Inc.", symbol: "AAPL", yahoo: "AAPL" },
   { name: "Microsoft Corp.", symbol: "MSFT", yahoo: "MSFT" },
   { name: "Amazon.com", symbol: "AMZN", yahoo: "AMZN" },
   { name: "Alphabet Inc.", symbol: "GOOGL", yahoo: "GOOGL" },
-  
-  // Neue ETFs
-  { name: "iShares MSCI World ETF", symbol: "IWDA", yahoo: "IWDA.L" },
-  { name: "Vanguard FTSE All-World", symbol: "VWRL", yahoo: "VWRL.L" },
-  { name: "Xtrackers MSCI World ETF", symbol: "XMWO", yahoo: "XMWO.MI" },
+  { name: "Tesla Inc.", symbol: "TSLA", yahoo: "TSLA" },
+  { name: "NVIDIA Corp.", symbol: "NVDA", yahoo: "NVDA" },
+  { name: "Meta Platforms Inc.", symbol: "META", yahoo: "META" },
+  { name: "Berkshire Hathaway", symbol: "BRK-B", yahoo: "BRK-B" },
+  { name: "Johnson & Johnson", symbol: "JNJ", yahoo: "JNJ" },
+  { name: "Visa Inc.", symbol: "V", yahoo: "V" },
+  { name: "Procter & Gamble Co.", symbol: "PG", yahoo: "PG" },
+  // Spezielle ETFs ohne Duplikate
   { name: "Xtrackers MSCI EM ETF", symbol: "XMEM", yahoo: "XMEM.SW" },
   { name: "iShares MSCI World Small Cap", symbol: "IUSN", yahoo: "IUSN.DE" },
-  { name: "MSCI World ETF (US)", symbol: "URTH", yahoo: "URTH" },
-  { name: "Emerging Markets ETF", symbol: "EEM", yahoo: "EEM" },
-  { name: "Small Cap World ETF", symbol: "VSS", yahoo: "VSS" },
   { name: "Nasdaq 100 ETF", symbol: "QQQ", yahoo: "QQQ" },
   { name: "Europe Stoxx 600 ETF", symbol: "VGK", yahoo: "VGK" },
-  { name: "FTSE Developed Europe", symbol: "VEA", yahoo: "VEA" },
   { name: "Total Stock Market ETF", symbol: "VTI", yahoo: "VTI" },
   { name: "Russell 2000 Small Cap", symbol: "IWM", yahoo: "IWM" },
-  { name: "Tesla Inc.", symbol: "TSLA", yahoo: "TSLA" },
-  { name: "NVIDIA Corp.", symbol: "NVDA", yahoo: "NVDA" }
+  { name: "Xtrackers MSCI World ETF", symbol: "XMWO", yahoo: "XMWO.MI" },
+  { name: "Emerging Markets ETF", symbol: "EEM", yahoo: "EEM" },
+  { name: "iShares Core MSCI World UCITS ETF", symbol: "IE00BJ0KDQ92", yahoo: "IWDA.L" },
+  { name: "Vanguard FTSE All-World UCITS ETF", symbol: "IE00BTJRMP35", yahoo: "VWRL.L" },
+  { name: "iShares Core S&P 500 UCITS ETF", symbol: "IE00BF4RFH31", yahoo: "CSSPX.L" },
 ]
-
 // CORS Middleware erweitern
 router.use((req, res, next) => {
   const allowedOrigins = [
