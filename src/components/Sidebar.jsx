@@ -46,12 +46,12 @@ function Sidebar({
 
   return (
     <aside
-      className={`fixed left-0 top-0 bottom-0 shadow-2xl flex flex-col gap-4 transition-all duration-300 ease-in-out
-        bg-white/90 md:bg-[rgba(255,255,255,0.1)] md:backdrop-blur-[40px] md:saturate-200`}
+      className="fixed left-0 top-0 bottom-0 shadow-2xl flex flex-col gap-4 transition-all duration-300 ease-in-out
+        bg-white/90 md:bg-[rgba(255,255,255,0.1)] md:backdrop-blur-[40px] md:saturate-200"
       style={{
         margin: "0",
-        minWidth: collapsed ? "44px" : "88vw",
-        width: collapsed ? "44px" : "92vw",
+        minWidth: collapsed ? "48px" : "80vw",
+        width: collapsed ? "48px" : "90vw",
         maxWidth: "360px",
         height: "100vh",
         zIndex: 10,
@@ -65,15 +65,12 @@ function Sidebar({
         border: "1px solid rgba(255, 255, 255, 0.2)",
         WebkitBackdropFilter: "blur(40px) saturate(200%)",
         overflow: "hidden",
-        left: 0,
-        transition: "transform 0.3s cubic-bezier(.4,2,.6,1), width 0.3s cubic-bezier(.4,2,.6,1)",
-        transform: collapsed ? "translateX(-100%)" : "translateX(0)",
       }}
     >
       {/* Collapse Button: Mobil ausgeblendet */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute top-3 right-2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hidden md:flex"
+        className="absolute top-4 right-2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hidden md:flex"
         style={{
           background: "rgba(255, 255, 255, 0.3)",
           backdropFilter: "blur(20px)",
@@ -84,8 +81,8 @@ function Sidebar({
         }}
       >
         <span
-          className="block w-full h-full flex items-center justify-center text-gray-700 text-2xl font-normal leading-none"
-          style={{ position: "relative", top: "-2px" }}
+          className="block w-full h-full flex items-center justify-center text-gray-700 text-3xl font-normal leading-none"
+          style={{ position: "relative", top: "-3px" }}
         >
           {collapsed ?  "›" : "‹"}
         </span>

@@ -231,86 +231,90 @@ function App() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 relative overflow-hidden">
       {/* Hamburger-Button für Mobilgeräte */}
       <button
-        className="fixed top-3 left-3 z-30 md:hidden bg-white/70 rounded-full p-1.5 shadow-lg"
+        className="fixed top-4 left-4 z-30 md:hidden bg-white/70 rounded-full p-2 shadow-lg"
         onClick={() => setMobileSidebarOpen(true)}
-        style={{ display: sidebarCollapsed ? "none" : undefined, width: 38, height: 38 }}
+        style={{ display: sidebarCollapsed ? "none" : undefined }}
       >
-        <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M4 8h14M4 16h14"/>
+        <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M4 8h20M4 16h20"/>
         </svg>
       </button>
       {/* Sidebar als Drawer auf Mobilgeräten */}
       <div
-        className={`fixed inset-0 z-40 bg-black/30 transition-opacity duration-300 md:hidden ${mobileSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-40 bg-black/30 transition-all duration-300 md:hidden ${mobileSidebarOpen ? "block" : "hidden"}`}
         onClick={() => setMobileSidebarOpen(false)}
       >
         <div
           className={`absolute top-0 left-0 h-full bg-white/90 shadow-2xl transition-transform duration-300
             ${mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-            w-[88vw] max-w-xs`}
-          style={{
-            borderTopRightRadius: 18,
-            borderBottomRightRadius: 18,
-            minWidth: 0,
-            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)",
-          }}
+            w-[100vw] max-w-[400px]`}
           onClick={e => e.stopPropagation()}
+          style={{
+            borderTopRightRadius: "24px",
+            borderBottomRightRadius: "24px",
+            minWidth: "0",
+            padding: "0",
+            overflowY: "auto",
+            boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.15)",
+          }}
         >
-          {prognoseMode ? (
-            <PrognoseSidebar
-              startAmount={prognoseStartAmount}
-              setStartAmount={setPrognoseStartAmount}
-              savingType={prognoseSavingType}
-              setSavingType={setPrognoseSavingType}
-              savingAmount={prognoseSavingAmount}
-              setSavingAmount={setPrognoseSavingAmount}
-              years={prognoseYears}
-              setYears={setPrognoseYears}
-              rendite={prognoseRendite}
-              setRendite={setPrognoseRendite}
-              dividendenRendite={prognoseDividendenRendite}
-              setDividendenRendite={setPrognoseDividendenRendite}
-              increaseEveryNYears={prognoseIncreaseEveryNYears}
-              setIncreaseEveryNYears={setPrognoseIncreaseEveryNYears}
-              increaseAmount={prognoseIncreaseAmount}
-              setIncreaseAmount={setPrognoseIncreaseAmount}
-              doubleMonths={prognoseDoubleMonths}
-              setDoubleMonths={setPrognoseDoubleMonths}
-              setShowAdvancedSettings={setShowAdvancedSettings}
-              collapsed={false}
-              setCollapsed={() => {}}
-            />
-          ) : (
-            <Sidebar
-              startAmount={startAmount}
-              setStartAmount={setStartAmount}
-              savingType={savingType}
-              setSavingType={setSavingType}
-              savingAmount={savingAmount}
-              setSavingAmount={setSavingAmount}
-              years={years}
-              setYears={setYears}
-              maxYears={maxYears}
-              assets={assets}
-              asset={asset}
-              setAsset={setAsset}
-              portfolioMode={portfolioMode}
-              setPortfolioMode={setPortfolioMode}
-              portfolioAssets={portfolioAssets}
-              setPortfolioAssets={setPortfolioAssets}
-              increaseEveryNYears={increaseEveryNYears}
-              increaseAmount={increaseAmount}
-              doubleMonths={doubleMonths}
-              setShowAdvancedSettings={setShowAdvancedSettings}
-              collapsed={false}
-              setCollapsed={() => {}}
-            />
-          )}
-          <button
-            className="absolute top-2 right-2 text-xl bg-white/70 rounded-full w-8 h-8 flex items-center justify-center shadow"
-            onClick={() => setMobileSidebarOpen(false)}
-            style={{ lineHeight: 1 }}
-          >✕</button>
+          <div className="relative">
+            <button
+              className="absolute top-3 right-3 text-2xl z-20 bg-white/80 rounded-full px-2 py-1 shadow"
+              onClick={() => setMobileSidebarOpen(false)}
+              style={{ lineHeight: 1 }}
+            >✕</button>
+            {prognoseMode ? (
+              <PrognoseSidebar
+                startAmount={prognoseStartAmount}
+                setStartAmount={setPrognoseStartAmount}
+                savingType={prognoseSavingType}
+                setSavingType={setPrognoseSavingType}
+                savingAmount={prognoseSavingAmount}
+                setSavingAmount={setPrognoseSavingAmount}
+                years={prognoseYears}
+                setYears={setPrognoseYears}
+                rendite={prognoseRendite}
+                setRendite={setPrognoseRendite}
+                dividendenRendite={prognoseDividendenRendite}
+                setDividendenRendite={setPrognoseDividendenRendite}
+                increaseEveryNYears={prognoseIncreaseEveryNYears}
+                setIncreaseEveryNYears={setPrognoseIncreaseEveryNYears}
+                increaseAmount={prognoseIncreaseAmount}
+                setIncreaseAmount={setPrognoseIncreaseAmount}
+                doubleMonths={prognoseDoubleMonths}
+                setDoubleMonths={setPrognoseDoubleMonths}
+                setShowAdvancedSettings={setShowAdvancedSettings}
+                collapsed={false}
+                setCollapsed={() => {}}
+              />
+            ) : (
+              <Sidebar
+                startAmount={startAmount}
+                setStartAmount={setStartAmount}
+                savingType={savingType}
+                setSavingType={setSavingType}
+                savingAmount={savingAmount}
+                setSavingAmount={setSavingAmount}
+                years={years}
+                setYears={setYears}
+                maxYears={maxYears}
+                assets={assets}
+                asset={asset}
+                setAsset={setAsset}
+                portfolioMode={portfolioMode}
+                setPortfolioMode={setPortfolioMode}
+                portfolioAssets={portfolioAssets}
+                setPortfolioAssets={setPortfolioAssets}
+                increaseEveryNYears={increaseEveryNYears}
+                increaseAmount={increaseAmount}
+                doubleMonths={doubleMonths}
+                setShowAdvancedSettings={setShowAdvancedSettings}
+                collapsed={false}
+                setCollapsed={() => {}}
+              />
+            )}
+          </div>
         </div>
       </div>
 
@@ -387,17 +391,15 @@ function App() {
 
       {/* Toggle Button */}
       <div 
-        className="fixed top-3 left-1/2 transform -translate-x-1/2 z-20 flex rounded-full overflow-hidden"
+        className="fixed top-8 left-1/2 transform -translate-x-1/2 z-20 flex rounded-full overflow-hidden"
         style={{
           background: "rgba(255, 255, 255, 0.15)",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
           border: "1px solid rgba(255, 255, 255, 0.2)",
-          paddingLeft: "2px",
+          paddingLeft: "4px",
           paddingRight: "1px",
-          height: 38,
-          minWidth: 170,
         }}
       >
         <div
@@ -414,40 +416,34 @@ function App() {
         />
         <button
           onClick={() => setPrognoseMode(false)}
-          className={`py-1.5 font-medium transition-all duration-200 relative z-10 text-xs md:text-base ${
+          className={`py-2 font-medium transition-all duration-200 relative z-10 ${
             !prognoseMode ? 'text-white' : 'text-gray-600 hover:text-gray-800'
           }`}
           style={{
             width: "65%",
-            paddingLeft: "0.9rem",
-            paddingRight: "0.9rem",
+            paddingLeft: "1.5rem",
+            paddingRight: "1.5rem",
           }}
         >
           Historische Daten
         </button>
         <button
           onClick={() => setPrognoseMode(true)}
-          className={`py-1.5 font-medium transition-all duration-200 relative z-10 text-xs md:text-base ${
+          className={`py-2 font-medium transition-all duration-200 relative z-10 ${
             prognoseMode ? 'text-white' : 'text-gray-600 hover:text-gray-800'
           }`}
           style={{
             width: "35%",
-            paddingLeft: "0.5rem",
-            paddingRight: "0.5rem",
+            paddingLeft: "0.75rem",
+            paddingRight: "0.75rem",
           }}
         >
           Prognose
         </button>
       </div>
 
-      <div className="flex w-full max-w-5xl gap-4 md:gap-8 items-start justify-center relative z-10
-        flex-col md:flex-row"
-        style={{
-          marginTop: 60,
-          marginLeft: mobileSidebarOpen ? 0 : undefined,
-          transition: "margin-left 0.3s",
-        }}
-      >
+      <div className="flex w-full max-w-5xl gap-8 items-start justify-center relative z-10
+        flex-col md:flex-row md:gap-8">
         {/* Sidebar: Desktop sichtbar, Mobil ausgeblendet */}
         <div className="hidden md:block">
           {prognoseMode ? (
@@ -504,10 +500,9 @@ function App() {
         {/* Hauptinhalt: Charts & MetricsPanel */}
         <div className="flex-1 flex flex-col items-center w-full"
           style={{
-            marginLeft: sidebarCollapsed && !mobileSidebarOpen ? "80px" : "260px",
+            marginLeft: sidebarCollapsed ? "80px" : "260px",
             transition: "margin-left 0.3s ease-in-out",
-            marginLeft: mobileSidebarOpen ? 0 : undefined,
-            padding: mobileSidebarOpen ? "12px 8px" : undefined,
+            marginLeft: undefined, // Mobil kein margin
           }}
         >
           {prognoseMode ? (
