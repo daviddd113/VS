@@ -7,17 +7,20 @@ const app = express()
 // Erlaube GitHub Pages als Origin
 const allowedOrigins = [
   'https://daviddd113.github.io',
-  'https://turbo-guacamole-6949xg77wp4g35xrw-5173.app.github.dev'
+  // weitere erlaubte Origins ggf. ergänzen
 ];
 
 app.use(cors({
   origin: function(origin, callback) {
-    // Erlaube keine Origin (z.B. bei lokalen Tools) oder explizit erlaubte Origins
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+    if (!origin) {
+      // Erlaube serverseitige oder lokale Tools ohne Origin
+      return callback(null, true);
     }
+    if (allowedOrigins.includes(origin)) {
+      // Nur die aktuelle Origin zurückgeben, nicht ein Array!
+      return callback(null, origin);
+    }
+    return callback(new Error('Not allowed by CORS'));
   }
 }));
 
