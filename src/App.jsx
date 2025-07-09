@@ -508,22 +508,42 @@ function App() {
           }}
         >
           {prognoseMode ? (
-            <PrognoseCharts
-              startAmount={prognoseStartAmount}
-              savingType={prognoseSavingType}
-              savingAmount={prognoseSavingAmount}
-              years={prognoseYears}
-              rendite={prognoseRendite}
-              dividendenRendite={prognoseDividendenRendite}
-              increaseEveryNYears={prognoseIncreaseEveryNYears}
-              increaseAmount={prognoseIncreaseAmount}
-              doubleMonths={prognoseDoubleMonths}
-            />
+            // PrognoseCharts: Mobile und Desktop mittig
+            <>
+              <div className="hidden md:flex flex-col items-center justify-center w-full h-full">
+                <PrognoseCharts
+                  startAmount={prognoseStartAmount}
+                  savingType={prognoseSavingType}
+                  savingAmount={prognoseSavingAmount}
+                  years={prognoseYears}
+                  rendite={prognoseRendite}
+                  dividendenRendite={prognoseDividendenRendite}
+                  increaseEveryNYears={prognoseIncreaseEveryNYears}
+                  increaseAmount={prognoseIncreaseAmount}
+                  doubleMonths={prognoseDoubleMonths}
+                />
+              </div>
+              <div className="md:hidden flex flex-col items-center justify-center w-full min-h-screen">
+                <div className="w-full max-w-2xl flex flex-col items-center justify-center">
+                  <PrognoseCharts
+                    startAmount={prognoseStartAmount}
+                    savingType={prognoseSavingType}
+                    savingAmount={prognoseSavingAmount}
+                    years={prognoseYears}
+                    rendite={prognoseRendite}
+                    dividendenRendite={prognoseDividendenRendite}
+                    increaseEveryNYears={prognoseIncreaseEveryNYears}
+                    increaseAmount={prognoseIncreaseAmount}
+                    doubleMonths={prognoseDoubleMonths}
+                  />
+                </div>
+              </div>
+            </>
           ) : (
             result ? (
               <>
                 {/* Desktop: wie gehabt */}
-                <div className="hidden md:flex flex-col md:flex-row gap-4 w-full">
+                <div className="hidden md:flex flex-col md:flex-row gap-4 w-full h-full items-center justify-center">
                   <div className="flex flex-col gap-4 w-full md:w-[220px]">
                     <MetricsPanel
                       portfolioMode={portfolioMode}
@@ -538,7 +558,7 @@ function App() {
                       doubleMonths={doubleMonths}
                     />
                   </div>
-                  <div className="flex-1" style={{ marginLeft: "0", marginTop: "20px" }}>
+                  <div className="flex-1 flex items-center justify-center" style={{ marginLeft: "0", marginTop: "20px" }}>
                     <Charts
                       portfolioMode={portfolioMode}
                       portfolioAssets={portfolioAssets}
@@ -551,14 +571,9 @@ function App() {
                     />
                   </div>
                 </div>
-                {/* Mobile: Metriken mit Margin */}
-                <div className="md:hidden flex flex-col gap-4 w-full">
-                  {/*
-                    MetricsPanel gibt eine Liste von MetricBoxen zurück.
-                    Wir fügen für die erste Box mt-4 (oben Margin) und mx-4 (seitlich) hinzu,
-                    für die weiteren nur mx-4.
-                  */}
-                  {React.Children.map(
+                {/* Mobile: Metriken und Diagramme wirklich mittig */}
+                <div className="md:hidden flex flex-col items-center justify-center w-full min-h-screen">
+                  <div className="w-full max-w-md flex flex-col gap-4 items-center">
                     <MetricsPanel
                       portfolioMode={portfolioMode}
                       asset={asset}
@@ -570,16 +585,9 @@ function App() {
                       increaseEveryNYears={increaseEveryNYears}
                       increaseAmount={increaseAmount}
                       doubleMonths={doubleMonths}
-                    />, 
-                    (child, idx) => {
-                      if (!child) return null
-                      return React.cloneElement(child, {
-                        className: (idx === 0 ? "mt-4 mx-4" : "mx-4") + " " + (child.props.className || "")
-                      })
-                    }
-                  )}
-                  {/* Charts darunter */}
-                  <div className="flex-1 w-full mt-4">
+                    />
+                  </div>
+                  <div className="w-full max-w-2xl flex items-center justify-center mt-4">
                     <Charts
                       portfolioMode={portfolioMode}
                       portfolioAssets={portfolioAssets}
