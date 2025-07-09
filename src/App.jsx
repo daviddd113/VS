@@ -102,8 +102,8 @@ function App() {
   }, [startAmount, savingAmount, savingType, increaseEveryNYears, increaseAmount, doubleMonths])
 
   useEffect(() => {
-    const apiUrl = 'https://vs-tmj9.onrender.com/api/assets'; // <--- Hier deine neue URL eintragen!
-    
+    // Immer Codespace-Backend-URL verwenden
+    const apiUrl = "https://turbo-guacamole-6949xg77wp4g35xrw-4000.app.github.dev/api/assets";
     fetch(apiUrl, {
       method: 'GET',
       headers: { 'Accept': 'application/json' },
@@ -271,8 +271,8 @@ function App() {
               doubleMonths={prognoseDoubleMonths}
               setDoubleMonths={setPrognoseDoubleMonths}
               setShowAdvancedSettings={setShowAdvancedSettings}
-              collapsed={false}
-              setCollapsed={() => {}}
+              collapsed={sidebarCollapsed}
+              setCollapsed={setSidebarCollapsed}
             />
           ) : (
             <Sidebar
@@ -296,8 +296,8 @@ function App() {
               increaseAmount={increaseAmount}
               doubleMonths={doubleMonths}
               setShowAdvancedSettings={setShowAdvancedSettings}
-              collapsed={false}
-              setCollapsed={() => {}}
+              collapsed={sidebarCollapsed}
+              setCollapsed={setSidebarCollapsed}
             />
           )}
           <button
@@ -398,8 +398,8 @@ function App() {
               ? "linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(16, 185, 129, 0.8))" 
               : "linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.8))",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-            left: prognoseMode ? "calc(65% - 2px)" : "6px",
-            width: prognoseMode ? "calc(35% - 2px)" : "calc(65% - 2px)",
+            left: prognoseMode ? "calc(60% - 2px)" : "6px",
+            width: prognoseMode ? "calc(40% - 2px)" : "calc(60% - 2px)",
             transform: "translateZ(0)",
           }}
         />
@@ -409,7 +409,7 @@ function App() {
             !prognoseMode ? 'text-white' : 'text-gray-600 hover:text-gray-800'
           }`}
           style={{
-            width: "65%",
+            width: "60%",
             paddingLeft: "1.5rem",
             paddingRight: "1.5rem",
           }}
@@ -422,7 +422,7 @@ function App() {
             prognoseMode ? 'text-white' : 'text-gray-600 hover:text-gray-800'
           }`}
           style={{
-            width: "35%",
+            width: "40%",
             paddingLeft: "0.75rem",
             paddingRight: "0.75rem",
           }}
@@ -431,10 +431,22 @@ function App() {
         </button>
       </div>
 
-      <div className="flex w-full max-w-5xl gap-8 items-start justify-center relative z-10
-        flex-col md:flex-row md:gap-8">
+      <div className="relative w-full max-w-5xl mx-auto flex flex-row items-start justify-center z-10">
         {/* Sidebar: Desktop sichtbar, Mobil ausgeblendet */}
-        <div className="hidden md:block">
+        <div
+          className="hidden md:flex flex-col"
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            marginTop: "2rem",
+            marginBottom: "2rem",
+            marginLeft: "2rem",
+            height: "calc(100vh - 4rem)",
+            zIndex: 20,
+          }}
+        >
           {prognoseMode ? (
             <PrognoseSidebar
               startAmount={prognoseStartAmount}
@@ -487,11 +499,12 @@ function App() {
           )}
         </div>
         {/* Hauptinhalt: Charts & MetricsPanel */}
-        <div className="flex-1 flex flex-col items-center w-full"
+        <div
+          className="flex-1 flex flex-col items-center justify-center w-full"
           style={{
-            marginLeft: sidebarCollapsed ? "80px" : "260px",
+            marginLeft: "calc(2rem + 260px)", // Sidebar-Breite + Margin
             transition: "margin-left 0.3s ease-in-out",
-            marginLeft: undefined, // Mobil kein margin
+            minHeight: "100vh",
           }}
         >
           {prognoseMode ? (
@@ -508,34 +521,78 @@ function App() {
             />
           ) : (
             result ? (
-              <div className="flex flex-col md:flex-row gap-4 w-full">
-                <div className="flex flex-col gap-4 w-full md:w-[220px]">
-                  <MetricsPanel
-                    portfolioMode={portfolioMode}
-                    asset={asset}
-                    result={result}
-                    years={years}
-                    startAmount={startAmount}
-                    savingAmount={savingAmount}
-                    savingType={savingType}
-                    increaseEveryNYears={increaseEveryNYears}
-                    increaseAmount={increaseAmount}
-                    doubleMonths={doubleMonths}
-                  />
+              <>
+                {/* Desktop: wie gehabt */}
+                <div className="hidden md:flex flex-col md:flex-row gap-4 w-full">
+                  <div className="flex flex-col gap-4 w-full md:w-[220px]">
+                    <MetricsPanel
+                      portfolioMode={portfolioMode}
+                      asset={asset}
+                      result={result}
+                      years={years}
+                      startAmount={startAmount}
+                      savingAmount={savingAmount}
+                      savingType={savingType}
+                      increaseEveryNYears={increaseEveryNYears}
+                      increaseAmount={increaseAmount}
+                      doubleMonths={doubleMonths}
+                    />
+                  </div>
+                  <div className="flex-1" style={{ marginLeft: "0", marginTop: "20px" }}>
+                    <Charts
+                      portfolioMode={portfolioMode}
+                      portfolioAssets={portfolioAssets}
+                      assets={assets}
+                      months={months}
+                      investmentTimeline={investmentTimeline}
+                      priceTimeline={priceTimeline}
+                      buyOrderMonths={buyOrderMonths}
+                      asset={asset}
+                    />
+                  </div>
                 </div>
-                <div className="flex-1" style={{ marginLeft: "0", marginTop: "20px" }}>
-                  <Charts
-                    portfolioMode={portfolioMode}
-                    portfolioAssets={portfolioAssets}
-                    assets={assets}
-                    months={months}
-                    investmentTimeline={investmentTimeline}
-                    priceTimeline={priceTimeline}
-                    buyOrderMonths={buyOrderMonths}
-                    asset={asset}
-                  />
+                {/* Mobile: Metriken mit Margin */}
+                <div className="md:hidden flex flex-col gap-4 w-full">
+                  {/*
+                    MetricsPanel gibt eine Liste von MetricBoxen zurück.
+                    Wir fügen für die erste Box mt-4 (oben Margin) und mx-4 (seitlich) hinzu,
+                    für die weiteren nur mx-4.
+                  */}
+                  {React.Children.map(
+                    <MetricsPanel
+                      portfolioMode={portfolioMode}
+                      asset={asset}
+                      result={result}
+                      years={years}
+                      startAmount={startAmount}
+                      savingAmount={savingAmount}
+                      savingType={savingType}
+                      increaseEveryNYears={increaseEveryNYears}
+                      increaseAmount={increaseAmount}
+                      doubleMonths={doubleMonths}
+                    />, 
+                    (child, idx) => {
+                      if (!child) return null
+                      return React.cloneElement(child, {
+                        className: (idx === 0 ? "mt-4 mx-4" : "mx-4") + " " + (child.props.className || "")
+                      })
+                    }
+                  )}
+                  {/* Charts darunter */}
+                  <div className="flex-1 w-full mt-4">
+                    <Charts
+                      portfolioMode={portfolioMode}
+                      portfolioAssets={portfolioAssets}
+                      assets={assets}
+                      months={months}
+                      investmentTimeline={investmentTimeline}
+                      priceTimeline={priceTimeline}
+                      buyOrderMonths={buyOrderMonths}
+                      asset={asset}
+                    />
+                  </div>
                 </div>
-              </div>
+              </>
             ) : (
               <div className="flex items-center justify-center h-96 text-gray-500">
                 <div className="text-center">
@@ -567,7 +624,6 @@ function App() {
     </div>
   )
 }
-
 
 export default App
 

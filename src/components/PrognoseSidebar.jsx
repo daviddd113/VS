@@ -55,14 +55,13 @@ function PrognoseSidebar({
 
   return (
     <aside
-      className="fixed left-0 top-0 bottom-0 shadow-2xl flex flex-col gap-4 transition-all duration-300 ease-in-out
+      className="fixed md:static left-0 top-0 bottom-0 shadow-2xl flex flex-col gap-4 transition-all duration-300 ease-in-out
         bg-white/90 md:bg-[rgba(255,255,255,0.1)] md:backdrop-blur-[40px] md:saturate-200"
       style={{
-        margin: "0",
-        minWidth: collapsed ? "48px" : "80vw",
-        width: collapsed ? "48px" : "90vw",
-        maxWidth: "360px",
-        height: "100vh",
+        minWidth: collapsed ? "48px" : "260px",
+        width: collapsed ? "48px" : "260px",
+        maxWidth: "260px",
+        height: "100%",
         zIndex: 10,
         display: "flex",
         justifyContent: "flex-start",
@@ -74,12 +73,13 @@ function PrognoseSidebar({
         border: "1px solid rgba(255, 255, 255, 0.2)",
         WebkitBackdropFilter: "blur(40px) saturate(200%)",
         overflow: "hidden",
+        transition: "all 0.3s cubic-bezier(.4,0,.2,1)",
       }}
     >
-      {/* Collapse Button: Mobil ausgeblendet */}
+      {/* Collapse Button: Desktop immer sichtbar */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute top-4 right-2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hidden md:flex"
+        className="absolute top-4 right-2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
         style={{
           background: "rgba(255, 255, 255, 0.3)",
           backdropFilter: "blur(20px)",
@@ -100,7 +100,7 @@ function PrognoseSidebar({
       {/* Collapsed State */}
       {collapsed ? (
         <div className="flex flex-col items-center justify-center h-full p-2">
-          {/* Keine vertikale Überschrift mehr */}
+          {/* Optional: Icon oder schmaler Streifen */}
         </div>
       ) : (
         <form className="flex flex-col gap-4 p-4 md:p-6 h-full overflow-y-auto">
